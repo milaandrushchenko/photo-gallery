@@ -1,7 +1,13 @@
+@use "styles/mixins" as *;
+
 .switcher {
   display: flex;
   gap: 8px;
   margin-bottom: 16px;
+
+  @include laptop {
+    display: none;
+  }
 }
 
 .switcher button {

@@ -1,3 +1,5 @@
+@use "styles/mixins" as *;
+
 .gallery {
   column-gap: 16px;
 }
@@ -8,6 +10,20 @@
 
 .fiveColumns {
   column-count: 5;
+}
+
+.gallery {
+  @include laptop {
+    column-count: 3;
+  }
+
+  @include tablet {
+    column-count: 2;
+  }
+
+  @include mobile {
+    column-count: 1;
+  }
 }
 
 .item {
