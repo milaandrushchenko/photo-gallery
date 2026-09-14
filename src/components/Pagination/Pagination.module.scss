@@ -1,0 +1,49 @@
+@use "styles/variables" as *;
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-block: 40px;
+}
+
+.pages {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page,
+.control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 40px;
+  height: 40px;
+  padding-inline: 12px;
+
+  border: 1px solid $color-border;
+  border-radius: 8px;
+
+  background: $color-background;
+  color: $color-text-primary;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.page:hover,
+.control:hover {
+  background: $color-surface-hover;
+  border-color: $color-border-hover;
+}
+
+.active {
+  background: $color-text-primary;
+  border-color: $color-text-primary;
+  color: $color-background;
+  pointer-events: none;
+}
