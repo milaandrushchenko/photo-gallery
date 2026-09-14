@@ -1,0 +1,9 @@
+.gallery {
+  column-count: 3;
+  column-gap: 16px;
+}
+
+.item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+}

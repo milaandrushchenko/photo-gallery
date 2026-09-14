@@ -1,4 +1,4 @@
-import { PhotoCard } from "@/components/PhotoCard/PhotoCard";
+import { Gallery } from "@/components/Gallery/Gallery";
 import { getPhotos } from "@/lib/unsplash/client";
 
 export default async function HomePage() {
@@ -8,9 +8,7 @@ export default async function HomePage() {
     <main>
       <h1>Photo Gallery</h1>
 
-      <div style={{ maxWidth: 400 }}>
-        <PhotoCard photo={photos[0]} />
-      </div>
+      <Gallery photos={photos} />
     </main>
   );
 }
