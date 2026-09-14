@@ -1,0 +1,14 @@
+.page {
+  width: 100%;
+}
+
+.container {
+  width: min(100% - 32px, 1440px);
+  margin-inline: auto;
+}
+
+.title {
+  margin: 32px 0 24px;
+  font-size: 32px;
+  line-height: 1.2;
+}
