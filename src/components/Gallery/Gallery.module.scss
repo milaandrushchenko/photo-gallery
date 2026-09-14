@@ -1,6 +1,13 @@
 .gallery {
-  column-count: 3;
   column-gap: 16px;
+}
+
+.threeColumns {
+  column-count: 3;
+}
+
+.fiveColumns {
+  column-count: 5;
 }
 
 .item {
