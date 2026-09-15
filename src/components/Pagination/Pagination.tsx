@@ -1,21 +1,40 @@
 import Link from "next/link";
 import styles from "./Pagination.module.scss";
+import { getPageHref } from "@/utils/getPageHref";
 
 interface PaginationProps {
   currentPage: number;
+  query?: string;
+  totalPages?: number;
 }
 
-export function Pagination({ currentPage }: PaginationProps) {
-  const pages = Array.from(
-    { length: 5 },
-    (_, index) => Math.max(1, currentPage - 2) + index,
-  );
+export function Pagination({
+  currentPage,
+  query,
+  totalPages,
+}: PaginationProps) {
+  const maxVisiblePages = 5;
 
+  let startPage = Math.max(1, currentPage - 2);
+  let endPage =
+    totalPages !== undefined
+      ? Math.min(totalPages, startPage + maxVisiblePages - 1)
+      : startPage + maxVisiblePages - 1;
+
+  if (totalPages !== undefined && endPage - startPage + 1 < maxVisiblePages) {
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  }
+
+  const pages = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, index) => startPage + index,
+  );
+  const hasNextPage = totalPages === undefined || currentPage < totalPages;
   return (
     <nav className={styles.pagination} aria-label="Pagination">
       {currentPage > 1 && (
         <Link
-          href={`/?page=${currentPage - 1}`}
+          href={getPageHref(currentPage - 1, query)}
           className={styles.control}
           aria-label="Previous page"
         >
@@ -27,7 +46,7 @@ export function Pagination({ currentPage }: PaginationProps) {
         {pages.map((page) => (
           <Link
             key={page}
-            href={`/?page=${page}`}
+            href={getPageHref(page, query)}
             className={`${styles.page} ${
               page === currentPage ? styles.active : ""
             }`}
@@ -40,25 +59,35 @@ export function Pagination({ currentPage }: PaginationProps) {
 
       <div className={styles.mobilePages}>
         {currentPage > 1 && (
-          <Link href={`/?page=${currentPage - 1}`} className={styles.page}>
+          <Link
+            href={getPageHref(currentPage - 1, query)}
+            className={styles.page}
+          >
             {currentPage - 1}
           </Link>
         )}
 
         <span className={`${styles.page} ${styles.active}`}>{currentPage}</span>
 
-        <Link href={`/?page=${currentPage + 1}`} className={styles.page}>
-          {currentPage + 1}
-        </Link>
+        {hasNextPage && (
+          <Link
+            href={getPageHref(currentPage + 1, query)}
+            className={styles.page}
+          >
+            {currentPage + 1}
+          </Link>
+        )}
       </div>
 
-      <Link
-        href={`/?page=${currentPage + 1}`}
-        className={styles.control}
-        aria-label="Next page"
-      >
-        →
-      </Link>
+      {hasNextPage && (
+        <Link
+          href={getPageHref(currentPage + 1, query)}
+          className={styles.control}
+          aria-label="Next page"
+        >
+          →
+        </Link>
+      )}
     </nav>
   );
 }

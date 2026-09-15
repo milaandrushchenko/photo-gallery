@@ -19,3 +19,9 @@ export interface Photo {
     };
   };
 }
+
+export interface SearchPhotosResponse {
+  total: number;
+  total_pages: number;
+  results: Photo[];
+}
