@@ -1,32 +1,16 @@
-"use client";
-
-import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
-
 import styles from "./SearchBar.module.scss";
 
-export function SearchBar() {
-  const router = useRouter();
-  const [query, setQuery] = useState("");
+interface SearchBarProps {
+  query?: string;
+}
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const trimmedQuery = query.trim();
-
-    if (!trimmedQuery) {
-      return;
-    }
-
-    router.push(`/?query=${encodeURIComponent(trimmedQuery)}`);
-  }
-
+export function SearchBar({ query }: SearchBarProps) {
   return (
-    <form className={styles.search} onSubmit={handleSubmit} role="search">
+    <form action="/" method="get" className={styles.search} role="search">
       <input
         type="search"
-        value={query}
-        onChange={(event) => setQuery(event.target.value)}
+        name="query"
+        defaultValue={query}
         placeholder="Search photos"
         aria-label="Search photos"
         className={styles.input}

@@ -36,7 +36,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       <div className={styles.container}>
         <h1 className={styles.title}>Photo Gallery</h1>
 
-        <SearchBar />
+        <SearchBar query={searchQuery} />
 
         <Gallery photos={photos} />
 
