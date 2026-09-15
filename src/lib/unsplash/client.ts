@@ -70,3 +70,25 @@ export async function searchPhotos(
 
   return response.json() as Promise<SearchPhotosResponse>;
 }
+
+export async function getPhoto(id: string): Promise<Photo> {
+  const accessKey = process.env.UNSPLASH_ACCESS_KEY;
+
+  if (!accessKey) {
+    throw new Error("UNSPLASH_ACCESS_KEY is not configured");
+  }
+
+  const response = await fetch(`${UNSPLASH_API_URL}/photos/${id}`, {
+    headers: {
+      Authorization: `Client-ID ${accessKey}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch photo: ${response.status} ${response.statusText}`,
+    );
+  }
+
+  return response.json() as Promise<Photo>;
+}

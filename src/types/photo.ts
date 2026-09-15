@@ -5,11 +5,15 @@ export interface Photo {
   alt_description: string | null;
   description: string | null;
   likes: number;
+
+  created_at: string;
+
   urls: {
     small: string;
     regular: string;
     full: string;
   };
+
   user: {
     name: string;
     username: string;
@@ -18,6 +22,20 @@ export interface Photo {
       medium: string;
     };
   };
+
+  tags?: {
+    type: string;
+    title: string;
+  }[];
+
+  exif?: {
+    make: string | null;
+    model: string | null;
+    exposure_time: string | null;
+    aperture: string | null;
+    focal_length: string | null;
+    iso: number | null;
+  } | null;
 }
 
 export interface SearchPhotosResponse {
