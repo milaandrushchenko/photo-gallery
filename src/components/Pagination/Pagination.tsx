@@ -23,7 +23,7 @@ export function Pagination({ currentPage }: PaginationProps) {
         </Link>
       )}
 
-      <div className={styles.pages}>
+      <div className={styles.desktopPages}>
         {pages.map((page) => (
           <Link
             key={page}
@@ -36,6 +36,20 @@ export function Pagination({ currentPage }: PaginationProps) {
             {page}
           </Link>
         ))}
+      </div>
+
+      <div className={styles.mobilePages}>
+        {currentPage > 1 && (
+          <Link href={`/?page=${currentPage - 1}`} className={styles.page}>
+            {currentPage - 1}
+          </Link>
+        )}
+
+        <span className={`${styles.page} ${styles.active}`}>{currentPage}</span>
+
+        <Link href={`/?page=${currentPage + 1}`} className={styles.page}>
+          {currentPage + 1}
+        </Link>
       </div>
 
       <Link

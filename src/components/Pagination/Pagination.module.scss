@@ -1,4 +1,5 @@
 @use "styles/variables" as *;
+@use "styles/mixins" as *;
 
 .pagination {
   display: flex;
@@ -8,10 +9,18 @@
   margin-block: 40px;
 }
 
-.pages {
-  display: flex;
+.desktopPages,
+.mobilePages {
   align-items: center;
   gap: 4px;
+}
+
+.desktopPages {
+  display: flex;
+}
+
+.mobilePages {
+  display: none;
 }
 
 .page,
@@ -32,13 +41,18 @@
 
   transition:
     background-color 0.2s ease,
-    border-color 0.2s ease;
-}
+    border-color 0.2s ease,
+    color 0.2s ease;
 
-.page:hover,
-.control:hover {
-  background: $color-surface-hover;
-  border-color: $color-border-hover;
+  &:hover {
+    background: $color-surface-hover;
+    border-color: $color-border-hover;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-text-primary;
+    outline-offset: 2px;
+  }
 }
 
 .active {
@@ -46,4 +60,26 @@
   border-color: $color-text-primary;
   color: $color-background;
   pointer-events: none;
+}
+
+@include mobile {
+  .pagination {
+    gap: 4px;
+    margin-block: 32px;
+  }
+
+  .desktopPages {
+    display: none;
+  }
+
+  .mobilePages {
+    display: flex;
+  }
+
+  .page,
+  .control {
+    min-width: 36px;
+    height: 36px;
+    padding-inline: 8px;
+  }
 }
