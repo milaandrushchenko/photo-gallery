@@ -1,0 +1,116 @@
+@use "styles/variables" as *;
+@use "styles/mixins" as *;
+
+.details {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(300px, 400px);
+  justify-content: center;
+  gap: 40px;
+  align-items: start;
+
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.imageWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.content {
+  position: sticky;
+  top: 32px;
+  padding-top: 4px;
+}
+
+.title {
+  margin-bottom: 8px;
+  font-size: 28px;
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+.author {
+  margin-bottom: 32px;
+  color: $color-text-secondary;
+  font-size: 14px;
+}
+
+.metadata {
+  display: grid;
+  gap: 0;
+
+  > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 14px;
+    border-bottom: 1px solid $color-border;
+  }
+
+  dt {
+    color: $color-text-secondary;
+    font-size: 14px;
+  }
+
+  dd {
+    margin: 0;
+    text-align: right;
+    font-size: 14px;
+  }
+}
+
+@include tablet {
+  .details {
+    grid-template-columns: 1fr;
+    width: 100%;
+    gap: 24px;
+  }
+
+  .author {
+    margin-bottom: 24px;
+  }
+
+  .content {
+    position: static;
+    width: 100%;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+}
+
+@include mobile {
+  .details {
+    gap: 20px;
+  }
+
+  .title {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  .author {
+    margin-bottom: 16px;
+  }
+
+  .metadata {
+    > div {
+      gap: 16px;
+      padding-block: 12px;
+    }
+  }
+}

@@ -2,28 +2,33 @@ import Image from "next/image";
 
 import type { Photo } from "@/types/photo";
 
+import styles from "./PhotoDetails.module.scss";
+
 interface PhotoDetailsProps {
   photo: Photo;
 }
 
 export function PhotoDetails({ photo }: PhotoDetailsProps) {
   return (
-    <article>
-      <Image
-        src={photo.urls.regular}
-        alt={photo.alt_description ?? `Photo by ${photo.user.name}`}
-        width={photo.width}
-        height={photo.height}
-      />
+    <article className={styles.details}>
+      <div className={styles.imageWrapper}>
+        <Image
+          src={photo.urls.regular}
+          alt={photo.alt_description ?? `Photo by ${photo.user.name}`}
+          width={photo.width}
+          height={photo.height}
+          className={styles.image}
+        />
+      </div>
 
-      <div>
-        <h1>
+      <div className={styles.content}>
+        <h1 className={styles.title}>
           {photo.description ?? photo.alt_description ?? "Untitled photo"}
         </h1>
 
-        <p>Photo by {photo.user.name}</p>
+        <p className={styles.author}>Photo by {photo.user.name}</p>
 
-        <dl>
+        <dl className={styles.metadata}>
           <div>
             <dt>Likes</dt>
             <dd>{photo.likes}</dd>
@@ -47,6 +52,13 @@ export function PhotoDetails({ photo }: PhotoDetailsProps) {
             <div>
               <dt>Aperture</dt>
               <dd>ƒ/{photo.exif.aperture}</dd>
+            </div>
+          )}
+
+          {photo.exif?.focal_length && (
+            <div>
+              <dt>Focal length</dt>
+              <dd>{photo.exif.focal_length} mm</dd>
             </div>
           )}
 
