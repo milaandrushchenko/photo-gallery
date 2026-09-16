@@ -17,6 +17,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  min-width: 0;
 }
 
 .image {
@@ -112,5 +113,33 @@
       gap: 16px;
       padding-block: 12px;
     }
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: $color-surface-hover;
+  color: $color-text-primary;
+  font-size: 14px;
+  line-height: 1;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: $color-border;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-text-primary;
+    outline-offset: 2px;
   }
 }

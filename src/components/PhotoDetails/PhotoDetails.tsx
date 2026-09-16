@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { Photo } from "@/types/photo";
 
 import styles from "./PhotoDetails.module.scss";
+import Link from "next/link";
 
 interface PhotoDetailsProps {
   photo: Photo;
@@ -69,6 +70,20 @@ export function PhotoDetails({ photo }: PhotoDetailsProps) {
             </div>
           )}
         </dl>
+
+        {photo.tags && photo.tags.length > 0 && (
+          <div className={styles.tags}>
+            {photo.tags.map((tag) => (
+              <Link
+                key={tag.title}
+                href={`/?query=${encodeURIComponent(tag.title)}`}
+                className={styles.tag}
+              >
+                {tag.title}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </article>
   );
