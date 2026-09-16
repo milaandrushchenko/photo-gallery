@@ -6,7 +6,7 @@ The application allows users to browse photos in a masonry-style gallery, search
 
 ## Live Demo
 
-[View Live Demo](https://photo-gallery-ns2p8utj3-liudmylas-projects-db11072d.vercel.app/)
+[View Live Demo](https://photo-gallery-five-tau.vercel.app/)
 
 ## Features
 
