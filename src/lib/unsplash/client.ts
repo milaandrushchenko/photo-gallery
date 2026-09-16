@@ -71,7 +71,7 @@ export async function searchPhotos(
   return response.json() as Promise<SearchPhotosResponse>;
 }
 
-export async function getPhoto(id: string): Promise<Photo> {
+export async function getPhoto(id: string): Promise<Photo | null> {
   const accessKey = process.env.UNSPLASH_ACCESS_KEY;
 
   if (!accessKey) {
@@ -83,6 +83,10 @@ export async function getPhoto(id: string): Promise<Photo> {
       Authorization: `Client-ID ${accessKey}`,
     },
   });
+
+  if (response.status === 404) {
+    return null;
+  }
 
   if (!response.ok) {
     throw new Error(

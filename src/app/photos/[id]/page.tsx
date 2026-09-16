@@ -1,6 +1,7 @@
 import { PhotoDetails } from "@/components/PhotoDetails/PhotoDetails";
 import { getPhoto } from "@/lib/unsplash/client";
 import styles from "./page.module.scss";
+import { notFound } from "next/navigation";
 
 interface PhotoPageProps {
   params: Promise<{
@@ -10,7 +11,12 @@ interface PhotoPageProps {
 
 export default async function PhotoPage({ params }: PhotoPageProps) {
   const { id } = await params;
+
   const photo = await getPhoto(id);
+
+  if (!photo) {
+    notFound();
+  }
 
   return (
     <main className={styles.page}>
