@@ -3,96 +3,75 @@ import type { Photo, SearchPhotosResponse } from "@/types/photo";
 const UNSPLASH_API_URL = "https://api.unsplash.com";
 const DEFAULT_PER_PAGE = 30;
 
-export async function getPhotos(
-  page = 1,
-  perPage = DEFAULT_PER_PAGE,
-): Promise<Photo[]> {
+class UnsplashApiError extends Error {
+  constructor(
+    public readonly status: number,
+    statusText: string,
+  ) {
+    super(`Unsplash API request failed: ${status} ${statusText}`);
+    this.name = "UnsplashApiError";
+  }
+}
+
+async function unsplashFetch<T>(
+  endpoint: string,
+  params?: URLSearchParams,
+): Promise<T> {
   const accessKey = process.env.UNSPLASH_ACCESS_KEY;
 
   if (!accessKey) {
     throw new Error("UNSPLASH_ACCESS_KEY is not configured");
   }
 
+  const queryString = params ? `?${params.toString()}` : "";
+
+  const response = await fetch(`${UNSPLASH_API_URL}${endpoint}${queryString}`, {
+    headers: {
+      Authorization: `Client-ID ${accessKey}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new UnsplashApiError(response.status, response.statusText);
+  }
+
+  return response.json() as Promise<T>;
+}
+
+export function getPhotos(
+  page = 1,
+  perPage = DEFAULT_PER_PAGE,
+): Promise<Photo[]> {
   const params = new URLSearchParams({
     page: String(page),
     per_page: String(perPage),
   });
 
-  const response = await fetch(
-    `${UNSPLASH_API_URL}/photos?${params.toString()}`,
-    {
-      headers: {
-        Authorization: `Client-ID ${accessKey}`,
-      },
-    },
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Failed to fetch photos: ${response.status} ${response.statusText}`,
-    );
-  }
-
-  return response.json() as Promise<Photo[]>;
+  return unsplashFetch<Photo[]>("/photos", params);
 }
 
-export async function searchPhotos(
+export function searchPhotos(
   query: string,
   page = 1,
   perPage = DEFAULT_PER_PAGE,
 ): Promise<SearchPhotosResponse> {
-  const accessKey = process.env.UNSPLASH_ACCESS_KEY;
-
-  if (!accessKey) {
-    throw new Error("UNSPLASH_ACCESS_KEY is not configured");
-  }
-
   const params = new URLSearchParams({
     query,
     page: String(page),
     per_page: String(perPage),
   });
 
-  const response = await fetch(
-    `${UNSPLASH_API_URL}/search/photos?${params.toString()}`,
-    {
-      headers: {
-        Authorization: `Client-ID ${accessKey}`,
-      },
-    },
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Failed to search photos: ${response.status} ${response.statusText}`,
-    );
-  }
-
-  return response.json() as Promise<SearchPhotosResponse>;
+  return unsplashFetch<SearchPhotosResponse>("/search/photos", params);
 }
 
 export async function getPhoto(id: string): Promise<Photo | null> {
-  const accessKey = process.env.UNSPLASH_ACCESS_KEY;
+  try {
+    return await unsplashFetch<Photo>(`/photos/${encodeURIComponent(id)}`);
+  } catch (error) {
+    if (error instanceof UnsplashApiError && error.status === 404) {
+      return null;
+    }
 
-  if (!accessKey) {
-    throw new Error("UNSPLASH_ACCESS_KEY is not configured");
+    throw error;
   }
-
-  const response = await fetch(`${UNSPLASH_API_URL}/photos/${id}`, {
-    headers: {
-      Authorization: `Client-ID ${accessKey}`,
-    },
-  });
-
-  if (response.status === 404) {
-    return null;
-  }
-
-  if (!response.ok) {
-    throw new Error(
-      `Failed to fetch photo: ${response.status} ${response.statusText}`,
-    );
-  }
-
-  return response.json() as Promise<Photo>;
 }
