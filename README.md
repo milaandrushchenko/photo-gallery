@@ -4,6 +4,10 @@ A responsive photo gallery application built with Next.js and the Unsplash API.
 
 The application allows users to browse photos in a masonry-style gallery, search for images, switch between different gallery layouts, navigate through paginated results, and view detailed information about individual photos.
 
+## Live Demo
+
+[View Live Demo](https://photo-gallery-ns2p8utj3-liudmylas-projects-db11072d.vercel.app/)
+
 ## Features
 
 - Responsive masonry photo gallery
@@ -34,7 +38,7 @@ The application allows users to browse photos in a masonry-style gallery, search
 
 ```bash
 git clone https://github.com/milaandrushchenko/photo-gallery.git
-cd unsplash-clone
+cd photo-gallery
 ```
 
 ### 2. Install dependencies
