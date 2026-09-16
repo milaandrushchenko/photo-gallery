@@ -1,15 +1,51 @@
+@use "styles/variables" as *;
 @use "styles/mixins" as *;
 
 .switcher {
-  display: flex;
-  gap: 8px;
+  display: inline-flex;
+  gap: 2px;
   margin-bottom: 16px;
+  padding: 3px;
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  background: $color-background;
 
   @include laptop {
     display: none;
   }
-}
 
-.switcher button {
-  cursor: pointer;
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 32px;
+    padding: 0;
+
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+
+    color: $color-text-secondary;
+    cursor: pointer;
+
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover {
+      background: $color-surface-hover;
+      color: $color-text-primary;
+    }
+
+    &[aria-pressed="true"] {
+      background: $color-text-primary;
+      color: $color-background;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-text-primary;
+      outline-offset: 2px;
+    }
+  }
 }

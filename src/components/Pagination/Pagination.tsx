@@ -2,6 +2,7 @@ import Link from "next/link";
 import styles from "./Pagination.module.scss";
 import { getPageHref } from "@/utils/getPageHref";
 
+import { ChevronLeft, ChevronRight } from "lucide-react";
 interface PaginationProps {
   currentPage: number;
   query?: string;
@@ -38,7 +39,7 @@ export function Pagination({
           className={styles.control}
           aria-label="Previous page"
         >
-          ←
+          <ChevronLeft size={18} aria-hidden="true" />
         </Link>
       )}
 
@@ -85,7 +86,7 @@ export function Pagination({
           className={styles.control}
           aria-label="Next page"
         >
-          →
+          <ChevronRight size={18} aria-hidden="true" />
         </Link>
       )}
     </nav>

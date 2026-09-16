@@ -1,5 +1,7 @@
 "use client";
 
+import { Columns3, Grid3X3 } from "lucide-react";
+
 import styles from "./GalleryViewSwitcher.module.scss";
 
 interface GalleryViewSwitcherProps {
@@ -16,17 +18,21 @@ export function GalleryViewSwitcher({
       <button
         type="button"
         onClick={() => onChange(3)}
+        aria-label="Show 3 columns"
         aria-pressed={columns === 3}
+        title="3 columns"
       >
-        3 columns
+        <Columns3 size={20} aria-hidden="true" />
       </button>
 
       <button
         type="button"
         onClick={() => onChange(5)}
+        aria-label="Show 5 columns"
         aria-pressed={columns === 5}
+        title="5 columns"
       >
-        5 columns
+        <Grid3X3 size={20} aria-hidden="true" />
       </button>
     </div>
   );
